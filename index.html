@@ -126,6 +126,17 @@ nav .brand::after{display:none}
 .progress{position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none}
 .progress span{display:block;height:100%;background:linear-gradient(90deg,rgba(227,172,52,.25),var(--wheat));transform-origin:left;transform:scaleX(0)}
 
+/* ---------- language switch (fixed, top right) ---------- */
+.lang-switch{position:fixed;top:12px;right:16px;z-index:900;display:flex;border:1px solid rgba(242,225,180,.32);
+background:rgba(12,32,20,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.lang-switch button{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.14em;line-height:1;padding:9px 11px;
+background:transparent;color:var(--muted);border:0;cursor:pointer;transition:color .25s var(--ease),background-color .25s var(--ease)}
+.lang-switch button + button{border-left:1px solid rgba(242,225,180,.22)}
+.lang-switch button:hover{color:var(--wheat-pale)}
+.lang-switch button[aria-pressed="true"]{background:var(--wheat);color:#22301F}
+@media(max-width:1340px){nav .wrap{margin-left:0;margin-right:100px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}}
+@media(max-width:520px){nav .wrap{margin-right:88px}.lang-switch{right:10px}}
+
 /* ---------- topographic line layer ---------- */
 .topo{position:absolute;pointer-events:none;overflow:visible}
 .topo path{fill:none;stroke:rgba(242,225,180,.06);stroke-width:1}
@@ -365,9 +376,9 @@ th[aria-sort="descending"] .sort i{opacity:1}
 .map-section .topo{left:-22%;bottom:-18%;width:70%;height:90%}
 .map-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;margin-top:38px;border:1px solid rgba(242,225,180,.22);background:var(--field-2)}
 @media(max-width:900px){.map-layout{grid-template-columns:1fr}}
-.map-sheet{position:relative;background:#E6DDC6}
-#map{height:540px;margin:0;border:0;background:#E3DAC3;position:relative;z-index:0}
-@media(max-width:900px){#map{height:420px}}
+.map-sheet{position:relative;background:#E6DDC6;display:flex;flex-direction:column}
+#map{flex:1 1 auto;min-height:540px;margin:0;border:0;background:#E3DAC3;position:relative;z-index:0}
+@media(max-width:900px){#map{min-height:420px}}
 .map-sheet .leaflet-tile-pane{filter:sepia(.18) saturate(.8) contrast(1.04)}
 .leaflet-container{font-family:"IBM Plex Mono",monospace}
 .leaflet-control-attribution{font-size:10px!important;background:rgba(241,235,220,.85)!important;color:#4A3A10!important}
@@ -599,6 +610,10 @@ footer a:hover,.ul:hover{background-size:100% 1px}
 </style>
 </head>
 <body>
+<div class="lang-switch" role="group" aria-label="Language · Dil">
+  <button type="button" data-lang="en" aria-pressed="true" lang="en" title="English">EN</button>
+  <button type="button" data-lang="az" aria-pressed="false" lang="az" title="Azərbaycan dili">AZ</button>
+</div>
 
 <header class="hero" id="top">
   <div class="hero-media" aria-hidden="true">
@@ -1246,6 +1261,7 @@ footer a:hover,.ul:hover{background-size:100% 1px}
   </div>
 </footer>
 
+<script type="application/json" id="i18n-az">{"Ivanovka<br>2050":"İvanovka<br>2050","Ismayilli district · Azerbaijan · Est. 1840":"İsmayıllı rayonu · Azərbaycan · 1840-cı ildən","Measure the village <em>before<\/em> you model it.":"Kəndi modelləşdirməzdən <em>əvvəl<\/em> ölç.","A student-led living laboratory for climate-resilient agriculture, environmental monitoring, and rural innovation.":"İqlimə davamlı kənd təsərrüfatı, ekoloji monitorinq və kənd innovasiyaları üçün tələbələrin rəhbərlik etdiyi canlı laboratoriya.","Field data":"Sahə məlumatları","<span class=\"count\" data-stat=\"soilCollected\" data-count=\"247\">247<\/span> soil samples collected · <span class=\"count\" data-stat=\"locations\" data-count=\"6\">6<\/span> locations":"<span class=\"count\" data-stat=\"soilCollected\" data-count=\"247\">247<\/span> torpaq nümunəsi toplanıb · <span class=\"count\" data-stat=\"locations\" data-count=\"6\">6<\/span> məkan","Characterised":"Səciyyələndirilib","<span class=\"count\" data-stat=\"soilCharacterised\" data-count=\"137\">137<\/span> samples · pH, moisture, colour, structure":"<span class=\"count\" data-stat=\"soilCharacterised\" data-count=\"137\">137<\/span> nümunə · pH, rütubət, rəng, struktur","Research":"Tədqiqat","<span class=\"count\" data-stat=\"months\" data-count=\"37\">37<\/span> months · <span class=\"count\" data-stat=\"students\" data-count=\"10\">10<\/span> students · <span data-stat=\"period\">2023–2026<\/span>":"<span class=\"count\" data-stat=\"months\" data-count=\"37\">37<\/span> ay · <span class=\"count\" data-stat=\"students\" data-count=\"10\">10<\/span> tələbə · <span data-stat=\"period\">2023–2026<\/span>","Field notes":"Sahə qeydləri","Begin: why Ivanovka":"Başla: niyə İvanovka","Why Ivanovka":"Niyə İvanovka","Research question":"Tədqiqat sualı","What we measured":"Nəyi ölçdük","Findings":"Nəticələr","Map":"Xəritə","Methodology":"Metodologiya","Components":"Komponentlər","Roadmap":"Yol xəritəsi","Open data":"Açıq məlumat","Collaborate":"Əməkdaşlıq","Team":"Komanda","01 — Context":"01 — Kontekst","Why Ivanovka?":"Niyə İvanovka?","Rural communities around the world are being asked to reduce emissions, protect natural resources, and remain economically productive. Yet many interventions begin without a sufficiently detailed local environmental baseline.":"Dünyanın hər yerində kənd icmalarından tullantıları azaltmaq, təbii ehtiyatları qorumaq və eyni zamanda iqtisadi cəhətdən məhsuldar qalmaq tələb olunur. Lakin bir çox müdaxilələr kifayət qədər ətraflı yerli ekoloji baza göstəriciləri olmadan başlayır.","Ivanovka offers an unusual test case: an integrated agricultural community where farmland, livestock, water resources, machinery and production are connected within one system. Founded in 1840 by Molokan settlers, it is the only collective farm still operating in the former Soviet Union — its fields, machinery, herds and harvest remain in shared ownership. The farm carries the name of Nikolai Nikitin, who chaired it from 1953 to 1994. <span class=\"badge open\">Open data<\/span>":"İvanovka nadir sınaq nümunəsidir: əkin sahələri, heyvandarlıq, su ehtiyatları, texnika və istehsalın vahid sistemdə birləşdiyi inteqrasiya olunmuş kənd təsərrüfatı icması. 1840-cı ildə molokan köçkünləri tərəfindən salınan kənd keçmiş Sovet İttifaqında hələ də fəaliyyət göstərən yeganə kolxozdur — onun tarlaları, texnikası, sürüləri və məhsulu ortaq mülkiyyətdə qalır. Təsərrüfat 1953–1994-cü illərdə ona rəhbərlik etmiş Nikolay Nikitinin adını daşıyır. <span class=\"badge open\">Açıq məlumat<\/span>","ONE SYSTEM":"VAHİD SİSTEM","IVANOVKA":"İVANOVKA","shared ownership":"ortaq mülkiyyət","Farmland":"Əkin sahələri","Water resources":"Su ehtiyatları","Production":"İstehsal","Livestock":"Heyvandarlıq","Machinery":"Texnika","Ivanovka 2050 begins with a simple principle: <em>measure the system before attempting to change it.<\/em>":"İvanovka 2050 sadə bir prinsiplə başlayır: <em>sistemi dəyişdirməyə çalışmazdan əvvəl onu ölç.<\/em>","Field note · Ivanovka":"Sahə qeydi · İvanovka","Sunflower field on the edge of the village — one of the irrigated plots surveyed":"Kəndin kənarındakı günəbaxan sahəsi — tədqiq olunan suvarılan sahələrdən biri","02 — Enquiry":"02 — Sual","The research question":"Tədqiqat sualı","Can a low-cost, community-based environmental monitoring system help agricultural villages measure and improve climate resilience over time?":"Aşağı xərcli, icmaya əsaslanan ekoloji monitorinq sistemi kənd təsərrüfatı kəndlərinə iqlimə davamlılığı zamanla ölçməyə və yaxşılaşdırmağa kömək edə bilərmi?","01 — BASELINE":"01 — BAZA GÖSTƏRİCİLƏRİ","Where the village stands today":"Kənd bu gün harada dayanır","What is the environmental condition of the village at the point of first measurement — its soil, its water, its ground cover?":"İlk ölçmə anında kəndin ekoloji vəziyyəti necədir — onun torpağı, suyu, bitki örtüyü?","<i class=\"st done\"><\/i>Completed · 2026 field campaign":"<i class=\"st done\"><\/i>Tamamlanıb · 2026 sahə kampaniyası","02 — MONITORING":"02 — MONİTORİNQ","Whether low-cost methods hold up":"Aşağı xərcli üsullar özünü doğruldurmu","Can low-cost field measurements and sensors produce data that stays useful when repeated across seasons and years?":"Aşağı xərcli sahə ölçmələri və sensorlar mövsümlər və illər boyu təkrarlandıqda faydalı qalan məlumat verə bilərmi?","<i class=\"st done\"><\/i>Completed · repeatable protocol, 2024":"<i class=\"st done\"><\/i>Tamamlanıb · təkrarlana bilən protokol, 2024","03 — INTERVENTION":"03 — MÜDAXİLƏ","Whether the data changes anything":"Məlumat nəyisə dəyişirmi","Can that record guide measurable improvements in water use, biodiversity, emissions, waste and energy?":"Bu qeydlər su istifadəsi, biomüxtəliflik, tullantılar, israf və enerji sahəsində ölçülə bilən təkmilləşdirmələrə istiqamət verə bilərmi?","<i class=\"st done\"><\/i>Completed · Phase II research outputs, 2026":"<i class=\"st done\"><\/i>Tamamlanıb · II mərhələnin tədqiqat nəticələri, 2026","Measure <em>→<\/em> observe change <em>→<\/em> only then intervene":"Ölç <em>→<\/em> dəyişikliyi müşahidə et <em>→<\/em> yalnız sonra müdaxilə et","03 — Fieldwork":"03 — Sahə işi","The project ran over thirty-seven months, from research foundations in 2023 to a field campaign in Ivanovka in 2026, hosted by the Nikitin collective farm. Four workstreams ran in parallel during the fieldwork.":"Layihə otuz yeddi ay davam etdi — 2023-cü ildəki tədqiqat əsaslarından 2026-cı ildə Nikitin adına kolxozun ev sahibliyi etdiyi İvanovka sahə kampaniyasına qədər. Sahə işi zamanı dörd iş istiqaməti paralel aparıldı.","<span class=\"badge measured\">Measured<\/span> we produced this number ourselves":"<span class=\"badge measured\">Ölçülüb<\/span> bu rəqəmi özümüz əldə etmişik","<span class=\"badge observed\">Observed<\/span> recorded in the field, not instrumented":"<span class=\"badge observed\">Müşahidə<\/span> sahədə qeydə alınıb, cihazla ölçülməyib","<span class=\"badge open\">Open data<\/span> published source, cited":"<span class=\"badge open\">Açıq məlumat<\/span> dərc olunmuş mənbə, istinad verilib","WORKSTREAM A":"İŞ İSTİQAMƏTİ A","Soil":"Torpaq","Samples were taken across cultivated plots, field margins, disturbed ground near the road and vegetated slopes, then bagged and labelled on site. Of the 247 samples collected, 137 were characterised for pH, moisture, colour and structure.":"Nümunələr becərilən sahələrdən, sahə kənarlarından, yol kənarındakı pozulmuş torpaqdan və bitki örtüklü yamaclardan götürülüb, yerindəcə torbalara qablaşdırılıb və etiketlənib. Toplanan 247 nümunədən 137-si pH, rütubət, rəng və struktur üzrə səciyyələndirilib.","<i>Collected<\/i><span data-stat=\"soilCollected\">247<\/span><br> <i>Characterised<\/i><span data-stat=\"soilCharacterised\">137<\/span><br> <i>Published rows<\/i><span data-stat=\"publishedSoil\">20<\/span> · S-01–S-20<br> <i>Locations<\/i><span data-stat=\"locations\">6<\/span><br> <i>Parameters<\/i>pH · moisture · colour · structure<br> <span class=\"badge measured\">Measured<\/span>":"<i>Toplanıb<\/i><span data-stat=\"soilCollected\">247<\/span><br> <i>Səciyyələndirilib<\/i><span data-stat=\"soilCharacterised\">137<\/span><br> <i>Dərc olunmuş sətirlər<\/i><span data-stat=\"publishedSoil\">20<\/span> · S-01–S-20<br> <i>Məkanlar<\/i><span data-stat=\"locations\">6<\/span><br> <i>Parametrlər<\/i>pH · rütubət · rəng · struktur<br> <span class=\"badge measured\">Ölçülüb<\/span>","WORKSTREAM B":"İŞ İSTİQAMƏTİ B","Water":"Su","Samples were drawn from the farm reservoir known locally as Ivan-gölü, which feeds the irrigated fields, and assessed against daylight at the shoreline.":"Nümunələr yerli olaraq İvan-gölü adlanan və suvarılan sahələri qidalandıran təsərrüfat su anbarından götürülüb və sahildə gün işığında qiymətləndirilib.","<i>Site<\/i>Ivan-gölü<br> <i>Method<\/i>Shoreline sampling<br> <i>Indicators<\/i>Turbidity · suspended matter<br> <span class=\"badge measured\">Measured<\/span> <span class=\"badge observed\">Observed<\/span>":"<i>Məkan<\/i>İvan-gölü<br> <i>Üsul<\/i>Sahildən nümunə götürmə<br> <i>Göstəricilər<\/i>Bulanıqlıq · asılı hissəciklər<br> <span class=\"badge measured\">Ölçülüb<\/span> <span class=\"badge observed\">Müşahidə<\/span>","WORKSTREAM C":"İŞ İSTİQAMƏTİ C","Vegetation &amp; land condition":"Bitki örtüyü və torpaq səthinin vəziyyəti","At every point the team recorded ground cover and surface condition, comparing drip-irrigated sunflower rows against unmanaged margins and gravel-disturbed ground.":"Komanda hər nöqtədə bitki örtüyünü və səthin vəziyyətini qeydə alıb, damcı ilə suvarılan günəbaxan cərgələrini baxımsız kənar zolaqlar və çınqılla pozulmuş torpaqla müqayisə edib.","<i>Sites<\/i>6<br> <i>Recorded<\/i>Ground cover · vegetation · erosion · litter<br> <i>Documentation<\/i>Photographic record<br> <span class=\"badge observed\">Observed<\/span>":"<i>Məkanlar<\/i>6<br> <i>Qeydə alınıb<\/i>Bitki örtüyü · bitkilər · eroziya · zibil<br> <i>Sənədləşmə<\/i>Foto qeydlər<br> <span class=\"badge observed\">Müşahidə<\/span>","WORKSTREAM D":"İŞ İSTİQAMƏTİ D","DESK STUDY · NOT MEASURED":"KAMERAL TƏDQİQAT · ÖLÇÜLMƏYİB","Carbon mapping — secondary data":"Karbon xəritələşdirməsi — ikinci dərəcəli məlumat","Emission-relevant context for the village was assembled from published sources. It frames where emissions in Ivanovka are likely to sit; it is not a measured inventory, and this site does not present it as one.":"Kənd üçün tullantılarla bağlı kontekst dərc olunmuş mənbələrdən toplanıb. O, İvanovkada tullantıların harada cəmləşə biləcəyini göstərir; bu, ölçülmüş inventar deyil və sayt onu belə təqdim etmir.","<i>Output<\/i>Desk study, completed<br> <i>Data<\/i>Land use · agriculture · machinery · population<br> <i>Scope<\/i>Emission context, not a measured inventory<br> <span class=\"badge open\">Open data<\/span>":"<i>Nəticə<\/i>Kameral tədqiqat, tamamlanıb<br> <i>Məlumat<\/i>Torpaq istifadəsi · kənd təsərrüfatı · texnika · əhali<br> <i>Əhatə<\/i>Tullantı konteksti, ölçülmüş inventar deyil<br> <span class=\"badge open\">Açıq məlumat<\/span>","Field note · A — Soil · Ivanovka":"Sahə qeydi · A — Torpaq · İvanovka","Bagging and labelling a soil sample beside the drip-irrigated sunflower rows.":"Damcı ilə suvarılan günəbaxan cərgələrinin yanında torpaq nümunəsinin qablaşdırılması və etiketlənməsi.","Field note · B — Water · Ivanovka":"Sahə qeydi · B — Su · İvanovka","Assessing a water sample from Ivan-gölü against daylight.":"İvan-gölündən götürülmüş su nümunəsinin gün işığında qiymətləndirilməsi.","Field note · C — Vegetation · Ivanovka":"Sahə qeydi · C — Bitki örtüyü · İvanovka","Recording ground cover and surface condition at a survey point.":"Tədqiqat nöqtəsində bitki örtüyünün və səth vəziyyətinin qeydə alınması.","<span class=\"fn-id\">Photographic record<\/span>Kept at every sampling point alongside the labelled samples, so each point’s ground condition is documented together with its soil record.":"<span class=\"fn-id\">Foto qeydlər<\/span>Hər nümunə nöqtəsində etiketlənmiş nümunələrlə yanaşı aparılıb; beləliklə, hər nöqtənin səth vəziyyəti onun torpaq qeydi ilə birlikdə sənədləşdirilib.","Ivan-gölü — the farm reservoir feeding the irrigated fields":"İvan-gölü — suvarılan sahələri qidalandıran təsərrüfat su anbarı","04 — Findings":"04 — Nəticələr","What the data shows":"Məlumat nəyi göstərir","A soil dataset of 247 collected samples, of which 137 were characterised for pH, moisture, colour and structure. The charts, tables and ledger below are calculated from the characterised soil records published at row level, plus the Ivan-gölü water sample — so every value shown can be checked line by line.":"247 toplanmış nümunədən ibarət torpaq məlumat dəsti; onlardan 137-si pH, rütubət, rəng və struktur üzrə səciyyələndirilib. Aşağıdakı qrafiklər, cədvəllər və jurnal sətir səviyyəsində dərc olunmuş səciyyələndirilmiş torpaq qeydləri və İvan-gölü su nümunəsi əsasında hesablanıb — beləliklə, göstərilən hər bir dəyəri sətir-sətir yoxlamaq mümkündür.","soil samples collected":"toplanmış torpaq nümunəsi","characterised for pH, moisture, colour and structure":"pH, rütubət, rəng və struktur üzrə səciyyələndirilib","characterised soil records published at row level":"sətir səviyyəsində dərc olunmuş səciyyələndirilmiş torpaq qeydi","water sample, recorded separately (W-01)":"su nümunəsi, ayrıca qeydə alınıb (W-01)","Soil pH by sampling point":"Nümunə nöqtələri üzrə torpaq pH-ı","Mean of the published soil records at each point.":"Hər nöqtədə dərc olunmuş torpaq qeydlərinin orta qiyməti.","Soil moisture by sampling point":"Nümunə nöqtələri üzrə torpaq rütubəti","Mean moisture content of the published soil records at each point.":"Hər nöqtədə dərc olunmuş torpaq qeydlərinin orta rütubəti.","Soil character across land-use types":"Torpaq istifadəsi növləri üzrə torpağın xüsusiyyətləri","Dominant colour and structure in the published records at each point, from cultivated through disturbed to vegetated ground.":"Hər nöqtədə dərc olunmuş qeydlərdə üstünlük təşkil edən rəng və struktur — becərilən torpaqdan pozulmuş və bitki örtüklü torpağa qədər.","Point":"Nöqtə","Land use":"Torpaq istifadəsi","pH range":"pH diapazonu","Dominant colour":"Üstünlük təşkil edən rəng","Structure":"Struktur","<b>Observation · published records<\/b> The only blocky, light-brown material was recorded on the unmanaged vegetated slope (P4), which also carries the highest pH of the six points. Cultivated and irrigated ground returned darker soil with granular or crumb structure. With three or four published records per point, this is a pattern within the subset rather than a tested result.":"<b>Müşahidə · dərc olunmuş qeydlər<\/b> Yeganə bloklu, açıq qəhvəyi material baxımsız bitki örtüklü yamacda (P4) qeydə alınıb; bu nöqtə həm də altı nöqtə arasında ən yüksək pH-a malikdir. Becərilən və suvarılan torpaq dənəvər və ya ovuntulu struktura malik daha tünd rəngli torpaq göstərib. Hər nöqtədə üç və ya dörd dərc olunmuş qeyd olduğundan, bu, sınaqdan keçirilmiş nəticə deyil, alt çoxluq daxilindəki meyldir.","Published field ledger":"Dərc olunmuş sahə jurnalı","Every characterised soil record published at row level (<span data-stat=\"publishedSoil\">20<\/span> of <span data-stat=\"soilCharacterised\">137<\/span>), plus water sample W-01 — one row per sample, nothing aggregated away.":"Sətir səviyyəsində dərc olunmuş bütün səciyyələndirilmiş torpaq qeydləri (<span data-stat=\"soilCharacterised\">137<\/span> nümunədən <span data-stat=\"publishedSoil\">20<\/span>-si) və W-01 su nümunəsi — hər nümunə üçün bir sətir, heç nə ümumiləşdirilməyib.","ID<i aria-hidden=\"true\"><\/i>":"ID<i aria-hidden=\"true\"><\/i>","Type":"Növ","pH<i aria-hidden=\"true\"><\/i>":"pH<i aria-hidden=\"true\"><\/i>","Moisture<i aria-hidden=\"true\"><\/i>":"Rütubət<i aria-hidden=\"true\"><\/i>","Colour":"Rəng","Filter by point or sort by ID, pH or moisture. Empty cells (—) were not recorded for that sample type.":"Nöqtəyə görə süzün və ya ID, pH və ya rütubətə görə sıralayın. Boş xanalar (—) həmin nümunə növü üçün qeydə alınmayıb.","05 — Spatial data":"05 — Məkan məlumatları","Sampling map":"Nümunə xəritəsi","Six sampling points, P1–P6, across the village and its surrounding land — one for each land-use type studied. Positions are plotted from the field survey route, which places each point within its land-use area rather than at survey-grade precision.":"Kənddə və onun ətraf ərazisində altı nümunə nöqtəsi, P1–P6 — tədqiq olunan hər torpaq istifadəsi növü üçün bir nöqtə. Mövqelər sahə tədqiqatının marşrutu əsasında xəritəyə köçürülüb; bu, hər nöqtəni geodeziya dəqiqliyi ilə deyil, öz torpaq istifadəsi zonası daxilində yerləşdirir.","<i class=\"lg-dot\"><\/i>Sampling point":"<i class=\"lg-dot\"><\/i>Nümunə nöqtəsi","<i class=\"lg-halo\"><\/i>Sampling area · from survey route":"<i class=\"lg-halo\"><\/i>Nümunə zonası · marşrut üzrə","Field note · sampling point":"Sahə qeydi · nümunə nöqtəsi","Base map: Esri World Topographic Map, with data © OpenStreetMap contributors and others. Sampling points plotted from the survey route.":"Əsas xəritə: Esri World Topographic Map, məlumatlar © OpenStreetMap iştirakçıları və digərləri. Nümunə nöqtələri tədqiqat marşrutu əsasında qeyd olunub.","06 — Methodology":"06 — Metodologiya","Data &amp; methodology":"Məlumat və metodologiya","How the record was produced, and what each figure on this site rests on.":"Qeydlərin necə əldə edildiyi və bu saytdakı hər rəqəmin nəyə əsaslandığı.","<small>i<\/small>Site selection":"<small>i<\/small>Məkan seçimi","<small>ii<\/small>Sampling":"<small>ii<\/small>Nümunə götürmə","<small>iii<\/small>Labelling":"<small>iii<\/small>Etiketləmə","<small>iv<\/small>Characterisation":"<small>iv<\/small>Səciyyələndirmə","<small>v<\/small>Recording":"<small>v<\/small>Qeydiyyat","<small>vi<\/small>Open dataset":"<small>vi<\/small>Açıq məlumat dəsti","Sampling design":"Nümunə götürmə dizaynı","Six locations were chosen to span the land-use types present in the village: cultivated field margin, drip-irrigated plot, disturbed roadside ground, unmanaged vegetated slope, reservoir shoreline and the ridge overlooking the settlement.":"Altı məkan kənddəki torpaq istifadəsi növlərini əhatə etmək üçün seçilib: becərilən sahənin kənarı, damcı ilə suvarılan sahə, yol kənarındakı pozulmuş torpaq, baxımsız bitki örtüklü yamac, su anbarının sahili və yaşayış məntəqəsinə baxan silsilə.","Locations":"Məkanlar","Land-use types":"Torpaq istifadəsi növləri","Points":"Nöqtələr","Soil protocol":"Torpaq protokolu","Surface samples were taken by hand at each point, sealed in labelled bags and kept together until characterisation. Of the 247 collected, 137 were characterised on pH, moisture, colour and structure using field methods rather than accredited laboratory equipment.":"Səth nümunələri hər nöqtədə əllə götürülüb, etiketlənmiş torbalarda möhürlənib və səciyyələndirməyə qədər birlikdə saxlanılıb. Toplanan 247 nümunədən 137-si akkreditə olunmuş laboratoriya avadanlığı ilə deyil, sahə üsulları ilə pH, rütubət, rəng və struktur üzrə səciyyələndirilib.","Collected":"Toplanıb","Published rows":"Dərc olunmuş sətirlər","Method":"Üsul","Field methods, not accredited laboratory equipment":"Sahə üsulları, akkreditə olunmuş laboratoriya avadanlığı deyil","Water protocol":"Su protokolu","Samples were collected in vials from the shoreline of Ivan-gölü and assessed against daylight for turbidity and suspended matter, with pH recorded by the same field method used for soil.":"Nümunələr İvan-gölünün sahilindən flakonlara götürülüb, bulanıqlıq və asılı hissəciklər baxımından gün işığında qiymətləndirilib; pH torpaq üçün istifadə olunan eyni sahə üsulu ilə qeydə alınıb.","Site":"Məkan","Ivan-gölü shoreline":"İvan-gölü sahili","Container":"Qab","Vials":"Flakonlar","Assessed":"Qiymətləndirmə","Against daylight":"Gün işığında","Record":"Qeyd","Spatial data":"Məkan məlumatları","Point positions were recorded along the field survey route and plotted on a topographic base map built on OpenStreetMap data. They locate each land-use type within the village; they are not a survey-grade GPS record.":"Nöqtələrin mövqeləri sahə tədqiqatının marşrutu boyunca qeydə alınıb və OpenStreetMap məlumatları əsasında qurulmuş topoqrafik xəritəyə köçürülüb. Onlar kənd daxilində hər torpaq istifadəsi növünün yerini göstərir; bu, geodeziya dəqiqliyində GPS qeydi deyil.","Positions":"Mövqelər","Survey route":"Tədqiqat marşrutu","Base map":"Əsas xəritə","Esri topographic · OSM data":"Esri topoqrafik · OSM məlumatları","Precision":"Dəqiqlik","Land-use area, not survey-grade":"Torpaq istifadəsi zonası, geodeziya dəqiqliyi deyil","Data quality":"Məlumat keyfiyyəti","Every figure on this site carries its provenance. Measured means the team produced the number. Observed means it was recorded in the field without instrumentation. Open data means a published source, cited.":"Bu saytdakı hər rəqəmin mənbəyi göstərilir. «Ölçülüb» rəqəmin komanda tərəfindən əldə edildiyini bildirir. «Müşahidə» onun cihazsız, sahədə qeydə alındığını bildirir. «Açıq məlumat» istinad verilmiş dərc olunmuş mənbə deməkdir.","Provenance":"Mənbə","On every figure":"Hər rəqəmdə","Measured":"Ölçülüb","Observed":"Müşahidə","Evidence scope":"Sübutların əhatəsi","What the evidence covers":"Sübutlar nəyi əhatə edir","Each boundary below is stated where it applies on this page. They are gathered here so the scope of the study can be read in one place.":"Aşağıdakı hər bir hədd bu səhifədə aid olduğu yerdə qeyd olunub. Tədqiqatın əhatəsini bir yerdə oxumaq üçün onlar burada toplanıb.","137 of the 247 soil samples were characterised, using field methods rather than accredited laboratory equipment.":"247 torpaq nümunəsindən 137-si akkreditə olunmuş laboratoriya avadanlığı ilə deyil, sahə üsulları ilə səciyyələndirilib.","Row-level data are published for 20 of the 137 characterised samples; charts and point statistics on this page are calculated from those records.":"137 səciyyələndirilmiş nümunədən 20-si üçün sətir səviyyəsində məlumat dərc olunub; bu səhifədəki qrafiklər və nöqtə statistikası həmin qeydlər əsasında hesablanıb.","Findings · Open data":"Nəticələr · Açıq məlumat","All measurements come from the 2026 field campaign; the study reports no seasonal comparison.":"Bütün ölçmələr 2026-cı il sahə kampaniyasına aiddir; tədqiqat mövsümi müqayisə təqdim etmir.","The water record is a single sample, from Ivan-gölü.":"Su qeydi İvan-gölündən götürülmüş tək nümunədir.","Sampling-point positions come from the survey route, not a survey-grade GPS record.":"Nümunə nöqtələrinin mövqeləri geodeziya dəqiqliyində GPS qeydindən deyil, tədqiqat marşrutundan götürülüb.","Carbon mapping is a desk study from published sources — not a measured inventory.":"Karbon xəritələşdirməsi dərc olunmuş mənbələr əsasında aparılmış kameral tədqiqatdır — ölçülmüş inventar deyil.","Workstream D":"İş istiqaməti D","Phase II outputs are desk studies, designs and an assessment; they report no installed equipment and no measured reductions.":"II mərhələnin nəticələri kameral tədqiqatlar, layihələr və qiymətləndirmədir; onlar quraşdırılmış avadanlıq və ölçülmüş azalma barədə məlumat vermir.","System design":"Sistem dizaynı","07 — System design":"07 — Sistem dizaynı","From baseline to system":"Baza göstəricilərindən sistemə","Phase I established the environmental baseline in the 2026 field campaign. Phase II turned it into six documented research outputs — desk studies, system designs and a feasibility assessment — each defined by the work actually carried out.":"I mərhələ 2026-cı il sahə kampaniyasında ekoloji baza göstəricilərini müəyyən etdi. II mərhələ onu altı sənədləşdirilmiş tədqiqat nəticəsinə çevirdi — kameral tədqiqatlar, sistem layihələri və texniki-iqtisadi qiymətləndirmə; hər biri faktiki görülmüş işlə müəyyən olunur.","<i class=\"st done\"><\/i>Phase I — Established":"<i class=\"st done\"><\/i>I mərhələ — Müəyyən edilib","Delivered by the 2026 field campaign":"2026-cı il sahə kampaniyası ilə həyata keçirilib","ESTABLISHED":"MÜƏYYƏN EDİLİB","Environmental baseline":"Ekoloji baza göstəriciləri","247 soil samples collected and 137 characterised, a water sample from the reservoir feeding the irrigation system, and a ground-condition record across six land-use types — the reference point for any later measurement.":"247 torpaq nümunəsi toplanıb və 137-si səciyyələndirilib, suvarma sistemini qidalandıran su anbarından su nümunəsi götürülüb və altı torpaq istifadəsi növü üzrə səth vəziyyəti qeydə alınıb — sonrakı istənilən ölçmə üçün istinad nöqtəsi.","Field mapping":"Sahənin xəritələşdirilməsi","Six sampling locations selected, mapped and documented photographically, with a written, repeatable protocol for each point.":"Altı nümunə məkanı seçilib, xəritəyə salınıb və fotoşəkillərlə sənədləşdirilib; hər nöqtə üçün yazılı, təkrarlana bilən protokol hazırlanıb.","<i class=\"st done\"><\/i>Phase II — Completed research outputs":"<i class=\"st done\"><\/i>II mərhələ — Tamamlanmış tədqiqat nəticələri","Desk studies, designs and assessments — not field installations":"Kameral tədqiqatlar, layihələr və qiymətləndirmələr — sahədə quraşdırma deyil","COMPLETED 01 · Desk study":"TAMAMLANIB 01 · Kameral tədqiqat","Carbon monitoring":"Karbon monitorinqi","Emission-relevant context for the village compiled from published sources — land use, agriculture, machinery and population — together with a specified method for a measured inventory from farm records: herd numbers, fuel use, heating and machinery hours. No measured inventory is reported.":"Kənd üçün tullantılarla bağlı kontekst dərc olunmuş mənbələrdən toplanıb — torpaq istifadəsi, kənd təsərrüfatı, texnika və əhali — və təsərrüfat qeydləri əsasında ölçülmüş inventar üçün metod müəyyənləşdirilib: heyvanların sayı, yanacaq sərfi, istilik və texnikanın iş saatları. Ölçülmüş inventar təqdim olunmur.","COMPLETED 02 · Baseline &amp; index design":"TAMAMLANIB 02 · Baza göstəriciləri və indeks dizaynı","Biodiversity recovery":"Biomüxtəlifliyin bərpası","Vegetation, ground-cover and erosion observations at all six points, and the design of a Living Nature Index for tracking soil quality, vegetation health and degradation and for identifying areas for replanting.":"Bütün altı nöqtədə bitki örtüyü, səth örtüyü və eroziya müşahidələri, həmçinin torpaq keyfiyyətini, bitki örtüyünün sağlamlığını və deqradasiyanı izləmək, yenidən əkin üçün əraziləri müəyyən etmək məqsədilə «Canlı Təbiət İndeksi»nin dizaynı.","COMPLETED 03 · System design":"TAMAMLANIB 03 · Sistem layihəsi","Smart water":"Ağıllı su idarəçiliyi","A monitoring design for the irrigation system — detecting leaks, excess irrigation and quality issues — grounded in the Ivan-gölü water assessment. It is a design; no monitoring equipment has been installed.":"Suvarma sistemi üçün monitorinq layihəsi — sızmaları, artıq suvarmanı və keyfiyyət problemlərini aşkarlamaq üçün — İvan-gölü su qiymətləndirməsinə əsaslanır. Bu, layihədir; heç bir monitorinq avadanlığı quraşdırılmayıb.","COMPLETED 04 · System design":"TAMAMLANIB 04 · Sistem layihəsi","Smart dairy":"Ağıllı süd təsərrüfatı","A herd-monitoring design addressing methane emissions, feeding schedules, animal health and water use. No sensors have been installed and no emission reduction is claimed.":"Metan tullantılarını, yemləmə qrafikini, heyvanların sağlamlığını və su istifadəsini əhatə edən sürü monitorinqi layihəsi. Heç bir sensor quraşdırılmayıb və tullantıların azalması iddia edilmir.","COMPLETED 05 · Analytical framework":"TAMAMLANIB 05 · Analitik çərçivə","Food waste reduction":"Qida itkilərinin azaldılması","A framework for predicting demand, storage and transport needs for dairy and produce, identifying where losses can occur between the farm and the market. No loss reduction has been measured.":"Süd və kənd təsərrüfatı məhsulları üçün tələb, saxlama və daşıma ehtiyaclarını proqnozlaşdırmaq, təsərrüfatla bazar arasında itkilərin harada baş verə biləcəyini müəyyən etmək üçün çərçivə. İtkilərin azalması ölçülməyib.","COMPLETED 06 · Feasibility assessment":"TAMAMLANIB 06 · Texniki-iqtisadi qiymətləndirmə","Renewable energy":"Bərpa olunan enerji","An assessment of solar generation, biogas from livestock waste, storage and a community microgrid — a waste stream the farm already produces, evaluated as an energy source for local facilities. It assesses options; it does not describe an installed system.":"Günəş enerjisi istehsalı, heyvandarlıq tullantılarından bioqaz, enerji saxlanması və icma mikroşəbəkəsinin qiymətləndirilməsi — təsərrüfatın artıq yaratdığı tullantı axını yerli obyektlər üçün enerji mənbəyi kimi dəyərləndirilib. Bu, variantları qiymətləndirir; quraşdırılmış sistemi təsvir etmir.","Beyond one village":"Bir kənddən kənara","A community that runs as a single collective system is an unusually clean test case. Its protocol, dataset and Phase II outputs are published on this page so that agricultural communities across Azerbaijan and beyond can repeat the study and adapt it, rather than starting from zero.":"Vahid kollektiv sistem kimi fəaliyyət göstərən icma qeyri-adi dərəcədə aydın sınaq nümunəsidir. Onun protokolu, məlumat dəsti və II mərhələnin nəticələri bu səhifədə dərc olunub ki, Azərbaycanın və digər ölkələrin kənd təsərrüfatı icmaları sıfırdan başlamadan tədqiqatı təkrarlaya və uyğunlaşdıra bilsin.","08 — Programme":"08 — Proqram","Research foundations":"Tədqiqat əsasları","<i class=\"st done\"><\/i>Completed":"<i class=\"st done\"><\/i>Tamamlanıb","Initial project development":"Layihənin ilkin hazırlanması","Identification of environmental research objectives":"Ekoloji tədqiqat məqsədlərinin müəyyən edilməsi","Investigation of village-scale climate resilience":"Kənd miqyasında iqlimə davamlılığın araşdırılması","Methodology development":"Metodologiyanın hazırlanması","Sampling protocols for soil, water and vegetation":"Torpaq, su və bitki örtüyü üçün nümunə götürmə protokolları","Research framework and environmental indicators":"Tədqiqat çərçivəsi və ekoloji göstəricilər","Data collection and recording methodology":"Məlumat toplama və qeydiyyat metodologiyası","Fieldwork preparation":"Sahə işinə hazırlıq","Research planning and study design":"Tədqiqatın planlaşdırılması və dizaynı","Field documentation and labelling procedures":"Sahə sənədləşməsi və etiketləmə prosedurları","Measurement framework for the six sampling points":"Altı nümunə nöqtəsi üçün ölçmə çərçivəsi","Field research &amp; analysis":"Sahə tədqiqatı və təhlil","247 soil samples collected across 6 sampling locations":"6 nümunə məkanında 247 torpaq nümunəsi toplanıb","137 samples characterised for pH, moisture, colour and structure":"137 nümunə pH, rütubət, rəng və struktur üzrə səciyyələndirilib","Water sample and vegetation and land-condition observations":"Su nümunəsi, bitki örtüyü və səth vəziyyəti müşahidələri","Dataset preparation, Phase II research outputs and reporting":"Məlumat dəstinin hazırlanması, II mərhələnin tədqiqat nəticələri və hesabat","09 — Open data":"09 — Açıq məlumat","Ivanovka 2050 is designed around transparent, reproducible field research. Wherever possible, raw observations, sampling metadata, methodology and derived datasets are made openly available.":"İvanovka 2050 şəffaf və təkrarlana bilən sahə tədqiqatı prinsipi üzərində qurulub. Mümkün olan hər yerdə ilkin müşahidələr, nümunə metaməlumatları, metodologiya və törəmə məlumat dəstləri açıq şəkildə təqdim olunur.","A soil dataset of 247 collected samples, of which 137 were characterised for pH, moisture, colour and structure.":"247 toplanmış nümunədən ibarət torpaq məlumat dəsti; onlardan 137-si pH, rütubət, rəng və struktur üzrə səciyyələndirilib.","Field collection · soil samples":"Sahədə toplanıb · torpaq nümunələri","Characterised soil dataset":"Səciyyələndirilmiş torpaq məlumat dəsti","Soil records published individually":"Ayrı-ayrılıqda dərc olunmuş torpaq qeydləri","Water record, published separately":"Su qeydi, ayrıca dərc olunub","Fieldwork":"Sahə işi","Six sampling points in Ivanovka, 2026":"İvanovkada altı nümunə nöqtəsi, 2026","Labelled samples entered in the field ledger":"Etiketlənmiş nümunələr sahə jurnalına daxil edilib","Dataset":"Məlumat dəsti","Open CSV of the published row-level records":"Sətir səviyyəsində dərc olunmuş qeydlərin açıq CSV faylı","Reuse":"Təkrar istifadə","Independent analysis and replication of the protocol":"Müstəqil təhlil və protokolun təkrarlanması","Field dataset":"Sahə məlumat dəsti","Protocol and data quality":"Protokol və məlumat keyfiyyəti","Field ledger":"Sahə jurnalı","Every published record":"Bütün dərc olunmuş qeydlər","The CSV carries the 20 characterised soil samples published at row level (S-01–S-20) and the Ivan-gölü water sample (W-01), with sampling point, land-use type and all four parameters. It does not contain the other 117 characterised samples; the study totals above describe the full dataset. The sampling protocol is documented in the Methodology section.":"CSV faylı sətir səviyyəsində dərc olunmuş 20 səciyyələndirilmiş torpaq nümunəsini (S-01–S-20) və İvan-gölü su nümunəsini (W-01) — nümunə nöqtəsi, torpaq istifadəsi növü və bütün dörd parametrlə birlikdə — ehtiva edir. Digər 117 səciyyələndirilmiş nümunə bu fayla daxil deyil; yuxarıdakı tədqiqat göstəriciləri bütün məlumat dəstini təsvir edir. Nümunə götürmə protokolu Metodologiya bölməsində təsvir olunub.","10 — Collaboration":"10 — Əməkdaşlıq","Research &amp; collaboration":"Tədqiqat və əməkdaşlıq","Ivanovka 2050 is a completed, independent student-led study. Its dataset, protocol and research outputs are open to universities, environmental laboratories, agricultural researchers, data scientists and rural development organisations that want to build on them.":"İvanovka 2050 tələbələrin rəhbərlik etdiyi tamamlanmış, müstəqil tədqiqatdır. Onun məlumat dəsti, protokolu və tədqiqat nəticələri bunlar üzərində işləmək istəyən universitetlər, ekoloji laboratoriyalar, kənd təsərrüfatı tədqiqatçıları, məlumat alimləri və kənd inkişafı təşkilatları üçün açıqdır.","Open for":"Açıqdır","Completed study · open for collaboration":"Tamamlanmış tədqiqat · əməkdaşlığa açıq","<small>01<\/small>Academic collaboration":"<small>01<\/small>Akademik əməkdaşlıq","<small>02<\/small>Independent analysis of the dataset":"<small>02<\/small>Məlumat dəstinin müstəqil təhlili","<small>03<\/small>Environmental research partnerships":"<small>03<\/small>Ekoloji tədqiqat tərəfdaşlıqları","<small>04<\/small>Replication in other agricultural communities":"<small>04<\/small>Digər kənd təsərrüfatı icmalarında təkrarlanma","<small>05<\/small>Further use of the methodological framework":"<small>05<\/small>Metodoloji çərçivədən gələcək istifadə","<small>06<\/small>GIS, laboratory and data-science expertise":"<small>06<\/small>CİS, laboratoriya və məlumat elmi üzrə ekspertiza","Get in touch":"Əlaqə saxlayın","Collaborate with Ivanovka 2050":"İvanovka 2050 ilə əməkdaşlıq edin","For researchers":"Tədqiqatçılar üçün","Ivanovka 2050 is an open field case study for researchers interested in rural sustainability, environmental monitoring, agricultural systems, climate resilience and community-scale data collection. The study summary, the protocol and the published field records are all on this page.":"İvanovka 2050 kənd davamlılığı, ekoloji monitorinq, kənd təsərrüfatı sistemləri, iqlimə davamlılıq və icma miqyasında məlumat toplanması ilə maraqlanan tədqiqatçılar üçün açıq sahə nümunəsidir. Tədqiqatın xülasəsi, protokolu və dərc olunmuş sahə qeydləri bu səhifədədir.","11 — Team":"11 — Komanda","The field team":"Sahə komandası","students":"tələbə","months":"ay","agricultural community":"kənd təsərrüfatı icması","Roles reflect the work each person took on across the campaign. Several members covered more than one.":"Rollar hər bir şəxsin kampaniya boyu üzərinə götürdüyü işi əks etdirir. Bir neçə üzv birdən çox rolu yerinə yetirib.","Project lead — coordination, sampling, data analysis":"Layihə rəhbəri — koordinasiya, nümunə götürmə, məlumat təhlili","Lead":"Rəhbər","Research design — data analysis":"Tədqiqat dizaynı — məlumat təhlili","Design":"Dizayn","Environmental Research Lead — soil lead":"Ekoloji tədqiqatlar üzrə rəhbər — torpaq istiqaməti üzrə rəhbər","Soil · A":"Torpaq · A","Environmental sampling — water lead":"Ekoloji nümunə götürmə — su istiqaməti üzrə rəhbər","Water · B":"Su · B","Field research — vegetation &amp; land condition":"Sahə tədqiqatı — bitki örtüyü və səth vəziyyəti","Veg · C":"Bitki · C","Data analysis — carbon desk research":"Məlumat təhlili — karbon üzrə kameral tədqiqat","Carbon · D":"Karbon · D","Field research — sample logging &amp; labelling":"Sahə tədqiqatı — nümunələrin qeydiyyatı və etiketlənməsi","Logging":"Qeydiyyat","Community coordination — logistics &amp; site access":"İcma ilə koordinasiya — logistika və ərazilərə giriş","Community":"İcma","Field survey support":"Sahə tədqiqatına dəstək","Survey":"Tədqiqat","Field note · Team · Ivanovka":"Sahə qeydi · Komanda · İvanovka","At the entrance sign of the Nikitin collective farm, which hosted the survey.":"Tədqiqata ev sahibliyi edən Nikitin adına kolxozun giriş lövhəsinin yanında.","On the ridge above Ivanovka, looking out over the valley farmland.":"İvanovkanın üstündəki silsilədə, vadidəki əkin sahələrinə baxarkən.","Reviewing the survey plan between sampling points.":"Nümunə nöqtələri arasında tədqiqat planının nəzərdən keçirilməsi.","Field access":"Sahəyə giriş","Fieldwork was conducted with permission from the Nikitin collective farm, providing direct access to agricultural land and local environmental conditions. An acknowledgement of the study has been requested from the Ismayilli District Executive Authority.":"Sahə işi Nikitin adına kolxozun icazəsi ilə aparılıb; bu, kənd təsərrüfatı torpaqlarına və yerli ekoloji şəraitə birbaşa giriş imkanı verib. Tədqiqatın təsdiqi üçün İsmayıllı Rayon İcra Hakimiyyətinə müraciət edilib.","Project":"Layihə","<i>Project<\/i>Ivanovka 2050<br> <i>Type<\/i>Student-led environmental research study<br> <i>Location<\/i>Ivanovka, Ismayilli, Azerbaijan<br> <i>Status<\/i>Completed, <span data-stat=\"period\">2023–2026<\/span><br> <i>Fieldwork<\/i>2026 · 247 soil samples, 137 characterised":"<i>Layihə<\/i>İvanovka 2050<br> <i>Növ<\/i>Tələbələrin rəhbərlik etdiyi ekoloji tədqiqat<br> <i>Məkan<\/i>İvanovka, İsmayıllı, Azərbaycan<br> <i>Status<\/i>Tamamlanıb, <span data-stat=\"period\">2023–2026<\/span><br> <i>Sahə işi<\/i>2026 · 247 torpaq nümunəsi, 137-si səciyyələndirilib","Navigate":"Naviqasiya","Contact":"Əlaqə","Jeyla Ahmadzada — project lead<br> <a href=\"mailto:ivanovka2050@gmail.com\">ivanovka2050@gmail.com<\/a>":"Jeyla Ahmadzada — layihə rəhbəri<br> <a href=\"mailto:ivanovka2050@gmail.com\">ivanovka2050@gmail.com<\/a>","Village history and population: published encyclopaedic and press sources on Ivanovka, Ismayilli district. Field measurements collected by the team, 2026.":"Kəndin tarixi və əhalisi: İsmayıllı rayonunun İvanovka kəndi haqqında dərc olunmuş ensiklopedik və mətbuat mənbələri. Sahə ölçmələri komanda tərəfindən 2026-cı ildə aparılıb.","Ivanovka 2050 · student-led environmental research study · Ismayilli district, Azerbaijan":"İvanovka 2050 · tələbələrin rəhbərlik etdiyi ekoloji tədqiqat · İsmayıllı rayonu, Azərbaycan","@Sections":"Bölmələr","@Diagram: farmland, water resources, production, livestock and machinery, each connected to Ivanovka as one collective system in shared ownership.":"Diaqram: əkin sahələri, su ehtiyatları, istehsal, heyvandarlıq və texnika — hər biri İvanovka ilə ortaq mülkiyyətdə olan vahid kollektiv sistem kimi bağlıdır.","@Farmland":"Əkin sahələri","@Water resources":"Su ehtiyatları","@Production":"İstehsal","@Livestock":"Heyvandarlıq","@Machinery":"Texnika","@Sunflower field on the edge of Ivanovka":"İvanovkanın kənarındakı günəbaxan sahəsi","@Bagging a soil sample":"Torpaq nümunəsinin qablaşdırılması","@Water sample held against daylight":"Gün işığında tutulan su nümunəsi","@Recording ground cover at a survey point":"Tədqiqat nöqtəsində bitki örtüyünün qeydə alınması","@Holding a water sample from Ivan-gölü up to the light":"İvan-gölündən götürülmüş su nümunəsinin işığa tutulması","@Dataset scope":"Məlumat dəstinin əhatəsi","@Sampling map of Ivanovka showing points P1 to P6, plotted from the survey route.":"P1–P6 nöqtələrini göstərən İvanovka nümunə xəritəsi; nöqtələr tədqiqat marşrutu əsasında qeyd olunub.","@Sampling point field note":"Nümunə nöqtəsi üzrə sahə qeydi","@Protocol sequence":"Protokol ardıcıllığı","@From fieldwork to an open record":"Sahə işindən açıq qeydə","@Field team roster":"Sahə komandasının siyahısı","@The team at the collective farm sign":"Komanda kolxozun lövhəsinin yanında","@The team on the ridge above the village":"Komanda kəndin üstündəki silsilədə","@Team reviewing the survey plan":"Komanda tədqiqat planını nəzərdən keçirir"}</script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 /* ================= Project figures — the single source for every study-level number on the page =================
@@ -1294,6 +1310,74 @@ const POINTS = [
   {id:"P6", name:"P6 — Ridge above the village",   use:"Overview / open ground", lat:40.6265, lng:48.1580}
 ];
 
+/* ================= Language ================= */
+let LANG = 'en';
+const VOCAB_AZ = {
+  'Cultivated field edge':'Əkin sahəsinin kənarı', 'Drip-irrigated plot':'Damcı ilə suvarılan sahə',
+  'Compacted / gravel':'Sıxlaşmış / çınqıllı torpaq', 'Unmanaged margin':'Baxımsız kənar zolaq',
+  'Reservoir shoreline':'Su anbarının sahili', 'Overview / open ground':'Müşahidə nöqtəsi / açıq ərazi',
+  'P1 — Wheat field margin':'P1 — Buğda sahəsinin kənarı', 'P2 — Irrigated sunflower rows':'P2 — Suvarılan günəbaxan cərgələri',
+  'P3 — Disturbed roadside ground':'P3 — Yol kənarında pozulmuş torpaq', 'P4 — Vegetated slope':'P4 — Bitki örtüklü yamac',
+  'P5 — Ivan-gölü shoreline':'P5 — İvan-gölü sahili', 'P6 — Ridge above the village':'P6 — Kəndin üstündəki silsilə',
+  'Soil':'Torpaq', 'Water':'Su', 'Dark brown':'Tünd qəhvəyi', 'Brown':'Qəhvəyi', 'Light brown':'Açıq qəhvəyi', 'Clear':'Şəffaf',
+  'Granular':'Dənəvər', 'Crumb':'Ovuntulu', 'Blocky':'Bloklu', 'Ivan-gölü':'İvan-gölü', 'Ivan-gölü water sample':'İvan-gölü su nümunəsi'
+};
+const v = w => (LANG === 'az' && w != null && VOCAB_AZ[w]) ? VOCAB_AZ[w] : w;   /* display value; data stays English */
+const lower = w => LANG === 'az' ? w.toLocaleLowerCase('az') : w.toLowerCase();
+const PHRASES = {
+  en: {
+    all:'All', waterChip:'Water · W-01',
+    showing:(n,t) => 'Showing ' + n + ' of ' + t + ' published records',
+    locate:id => 'Show ' + id + ' on the sampling map',
+    csv:(s,w) => 'Download CSV — ' + s + ' soil + ' + w + ' water record',
+    ready:r => 'Dataset ready — ' + r + ' rows', readyStatus:r => 'Dataset ready: ivanovka2050_field_dataset.csv, ' + r + ' rows.',
+    fileMeta:(r,s,w,kb) => '<b>ivanovka2050_field_dataset.csv</b> · ' + r + ' rows (' + s + ' soil, ' + w + ' water) · 8 columns · UTF-8 · ' + kb + ' KB',
+    panelDefault:'<p style="margin:0 0 10px">Six sampling points, each spanning a different land-use type. Choose one on the map or from the list to read its field note.</p><p style="margin:0" class="approx">Choosing a point also filters the field ledger to its records.<br>Positions are plotted from the field survey route.</p>',
+    pubRecords:'Published records', meanPh:'Mean pH', meanMo:'Mean moisture', colour:'Colour', structure:'Structure', range:'range', measured:'Measured',
+    alsoWater:(id,ph,c) => 'Also at Ivan-gölü: water sample ' + id + ' — pH ' + ph + ', ' + c + '.',
+    plotted:(la,ln) => 'Plotted at ' + la + '° N, ' + ln + '° E from the survey route.',
+    viewLedger:id => 'View ' + id + ' in ledger →', allPoints:'All points',
+    markerTitle:n => n + ' — survey-route position',
+    mapOffline:'The base map could not load. The six points and their field notes remain available in the panel.',
+    obs:'Observation · published records',
+    nums:['zero','one','two','three','four','five','six','seven','eight','nine'], or:' or ',
+    findPh:(f) => 'All ' + f.n + ' published soil records fall between ' + f.min + ' and ' + f.max + ', a mean of ' + f.mean +
+      ' — neutral to slightly alkaline, with no acidic reading among them. The spread is narrow: ' + f.hi + ' at ' + f.hiId + ' (' + f.hiUse +
+      ') against ' + f.lo + ' at ' + f.loId + ' (' + f.loUse + '), a difference of ' + f.diff + ' pH units.',
+    findMo:(f) => 'Moisture ranges from ' + f.min + '% to ' + f.max + '%, a mean of ' + f.mean + '%. The wettest ground is ' + f.hiId + ' (' + f.hiUse +
+      ', ' + f.hi + '%), the driest ' + f.loId + ' (' + f.loUse + ', ' + f.lo + '%). The two wettest points also return the two lowest pH means, which would be ' +
+      'consistent with wetter ground holding more organic matter. With ' + f.nRange + ' published records per point, this is a pattern within the subset rather than a tested result.',
+    title:'Ivanovka 2050 — A living laboratory for climate-resilient agriculture',
+    description:'A completed student-led environmental study (2023–2026) in Ivanovka, Ismayilli district, Azerbaijan — the last surviving collective farm of the former USSR. 247 soil samples collected, 137 characterised for pH, moisture, colour and structure.'
+  },
+  az: {
+    all:'Hamısı', waterChip:'Su · W-01',
+    showing:(n,t) => 'Dərc olunmuş ' + t + ' qeyddən ' + n + ' göstərilir',
+    locate:id => id + ' nöqtəsini nümunə xəritəsində göstər',
+    csv:(s,w) => 'CSV yüklə — ' + s + ' torpaq + ' + w + ' su qeydi',
+    ready:r => 'Məlumat dəsti hazırdır — ' + r + ' sətir', readyStatus:r => 'Məlumat dəsti hazırdır: ivanovka2050_field_dataset.csv, ' + r + ' sətir.',
+    fileMeta:(r,s,w,kb) => '<b>ivanovka2050_field_dataset.csv</b> · ' + r + ' sətir (' + s + ' torpaq, ' + w + ' su) · 8 sütun · UTF-8 · ' + kb + ' KB · sütun adları və dəyərlər ingilis dilindədir',
+    panelDefault:'<p style="margin:0 0 10px">Hər biri fərqli torpaq istifadəsi növünü təmsil edən altı nümunə nöqtəsi. Sahə qeydini oxumaq üçün xəritədə və ya siyahıda birini seçin.</p><p style="margin:0" class="approx">Nöqtəni seçdikdə sahə jurnalı da onun qeydlərinə görə süzülür.<br>Mövqelər sahə tədqiqatının marşrutu əsasında xəritəyə köçürülüb.</p>',
+    pubRecords:'Dərc olunmuş qeydlər', meanPh:'Orta pH', meanMo:'Orta rütubət', colour:'Rəng', structure:'Struktur', range:'diapazon', measured:'Ölçülüb',
+    alsoWater:(id,ph,c) => 'İvan-gölü-də həmçinin: su nümunəsi ' + id + ' — pH ' + ph + ', ' + c + '.',
+    plotted:(la,ln) => 'Sahə marşrutu əsasında ' + la + '° N, ' + ln + '° E nöqtəsində qeyd olunub.',
+    viewLedger:id => id + ' qeydlərini jurnalda gör →', allPoints:'Bütün nöqtələr',
+    markerTitle:n => n + ' — marşrut üzrə mövqe',
+    mapOffline:'Əsas xəritə yüklənmədi. Altı nöqtə və onların sahə qeydləri paneldə əlçatandır.',
+    obs:'Müşahidə · dərc olunmuş qeydlər',
+    nums:['sıfır','bir','iki','üç','dörd','beş','altı','yeddi','səkkiz','doqquz'], or:' və ya ',
+    findPh:(f) => 'Dərc olunmuş ' + f.n + ' torpaq qeydinin hamısı ' + f.min + ' ilə ' + f.max + ' arasındadır, orta qiymət ' + f.mean +
+      ' — neytraldan zəif qələviyə qədər; aralarında turş göstərici yoxdur. Yayılma dardır: ' + f.hiId + ' nöqtəsində ' + f.hi + ' (' + f.hiUse +
+      '), ' + f.loId + ' nöqtəsində isə ' + f.lo + ' (' + f.loUse + '); fərq ' + f.diff + ' pH vahididir.',
+    findMo:(f) => 'Rütubət ' + f.min + '% ilə ' + f.max + '% arasında dəyişir, orta qiymət ' + f.mean + '%. Ən rütubətli torpaq ' + f.hiId + ' (' + f.hiUse +
+      ', ' + f.hi + '%), ən quru torpaq isə ' + f.loId + ' (' + f.loUse + ', ' + f.lo + '%) nöqtəsindədir. Ən rütubətli iki nöqtə həm də ən aşağı orta pH göstəricilərinə malikdir; ' +
+      'bu, rütubətli torpağın daha çox üzvi maddə saxlaması ilə uyğun gəlir. Hər nöqtədə ' + f.nRange + ' dərc olunmuş qeyd olduğundan, bu, sınaqdan keçirilmiş nəticə deyil, alt çoxluq daxilində müşahidə olunan meyldir.',
+    title:'İvanovka 2050 — İqlimə davamlı kənd təsərrüfatı üçün canlı laboratoriya',
+    description:'İsmayıllı rayonunun İvanovka kəndində tələbələrin rəhbərliyi ilə aparılmış və tamamlanmış ekoloji tədqiqat (2023–2026). İvanovka keçmiş SSRİ-nin hələ də fəaliyyət göstərən yeganə kolxozudur. 247 torpaq nümunəsi toplanıb, 137-si pH, rütubət, rəng və struktur üzrə səciyyələndirilib.'
+  }
+};
+const t = k => PHRASES[LANG][k];
+
 const soil = SAMPLES.filter(s => s.type === "Soil");
 const STATS = Object.assign({}, PROJECT, {
   parameterCount: PROJECT.parameters.length,
@@ -1310,9 +1394,7 @@ document.querySelectorAll('[data-stat]').forEach(el => {
   el.textContent = v;
   if (el.classList.contains('count')) el.dataset.count = v;
 });
-const CSV_LABEL = 'Download CSV — ' + STATS.publishedSoil + ' soil + ' + STATS.publishedWater + ' water record';
-document.getElementById('file-rows').textContent = STATS.publishedRows + ' rows (' + STATS.publishedSoil + ' soil, ' + STATS.publishedWater + ' water)';
-document.querySelector('#dl-csv .dl-label').textContent = CSV_LABEL;
+const csvLabel = () => t('csv')(STATS.publishedSoil, STATS.publishedWater);
 const mean = a => a.reduce((x,y)=>x+y,0)/a.length;
 const r1 = n => Math.round(n*10)/10;
 const r2 = n => Math.round(n*100)/100;
@@ -1331,50 +1413,49 @@ const byPoint = POINTS.map(p => {
 function drawBars(el, val, lo, hi, fmt, cls){
   document.getElementById(el).innerHTML = byPoint.map((r,i) => {
     const pct = Math.max(3, Math.min(100, ((val(r)-lo)/(hi-lo))*100));
-    return '<div class="bar-row" data-point="'+r.id+'"><span class="bar-label">'+r.id+' <span>· '+r.use+'</span></span>'+
+    return '<div class="bar-row" data-point="'+r.id+'"><span class="bar-label">'+r.id+' <span>· '+v(r.use)+'</span></span>'+
       '<div class="bar-track"><div class="bar-fill '+(cls||'')+'" style="width:'+pct+'%;--d:'+(i*80)+'ms"></div></div>'+
       '<span class="bar-val">'+fmt(r)+'</span></div>';
   }).join('');
 }
-drawBars('chart-ph',    r=>r.phMean, 6.0, 8.0, r=>r1(r.phMean).toFixed(1), '');
-drawBars('chart-moist', r=>r.moMean, 0,   30,  r=>r1(r.moMean)+'%',        'blue');
+function renderCharts(){
+  drawBars('chart-ph',    r=>r.phMean, 6.0, 8.0, r=>r1(r.phMean).toFixed(1), '');
+  drawBars('chart-moist', r=>r.moMean, 0,   30,  r=>r1(r.moMean)+'%',        'blue');
+}
 
-(function(){
+function renderFindings(){
   const allPh = soil.map(s=>s.ph), allMo = soil.map(s=>s.moisture);
   const sortPh = byPoint.slice().sort((a,b)=>b.phMean-a.phMean);
   const sortMo = byPoint.slice().sort((a,b)=>b.moMean-a.moMean);
   const hiPh = sortPh[0], loPh = sortPh[sortPh.length-1];
   const hiMo = sortMo[0], loMo = sortMo[sortMo.length-1];
-  const ns = byPoint.map(p => p.n), words = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+  const ns = byPoint.map(p => p.n), words = t('nums');
   const w = n => words[n] || String(n);
-  const nRange = Math.min(...ns) === Math.max(...ns) ? w(ns[0]) : w(Math.min(...ns)) + ' or ' + w(Math.max(...ns));
+  const nRange = Math.min(...ns) === Math.max(...ns) ? w(ns[0]) : w(Math.min(...ns)) + t('or') + w(Math.max(...ns));
 
-  document.getElementById('find-ph').innerHTML =
-    '<b>Observation · published records</b>All ' + soil.length + ' published soil records fall between ' + Math.min(...allPh) +
-    ' and ' + Math.max(...allPh) + ', a mean of ' + r2(mean(allPh)) +
-    ' — neutral to slightly alkaline, with no acidic reading among them. ' +
-    'The spread is narrow: ' + r1(hiPh.phMean).toFixed(1) + ' at ' + hiPh.id + ' (' + hiPh.use.toLowerCase() +
-    ') against ' + r1(loPh.phMean).toFixed(1) + ' at ' + loPh.id + ' (' + loPh.use.toLowerCase() +
-    '), a difference of ' + r1(hiPh.phMean-loPh.phMean).toFixed(1) + ' pH units.';
+  document.getElementById('find-ph').innerHTML = '<b>' + t('obs') + '</b>' + t('findPh')({
+    n: soil.length, min: Math.min(...allPh), max: Math.max(...allPh), mean: r2(mean(allPh)),
+    hi: r1(hiPh.phMean).toFixed(1), hiId: hiPh.id, hiUse: lower(v(hiPh.use)),
+    lo: r1(loPh.phMean).toFixed(1), loId: loPh.id, loUse: lower(v(loPh.use)), diff: r1(hiPh.phMean-loPh.phMean).toFixed(1)});
 
-  document.getElementById('find-moist').innerHTML =
-    '<b>Observation · published records</b>Moisture ranges from ' + Math.min(...allMo) + '% to ' + Math.max(...allMo) +
-    '%, a mean of ' + r1(mean(allMo)) + '%. The wettest ground is ' + hiMo.id + ' (' + hiMo.use.toLowerCase() +
-    ', ' + r1(hiMo.moMean) + '%), the driest ' + loMo.id + ' (' + loMo.use.toLowerCase() + ', ' +
-    r1(loMo.moMean) + '%). The two wettest points also return the two lowest pH means, which would be ' +
-    'consistent with wetter ground holding more organic matter. With ' + nRange + ' published records per point, ' +
-    'this is a pattern within the subset rather than a tested result.';
-})();
+  document.getElementById('find-moist').innerHTML = '<b>' + t('obs') + '</b>' + t('findMo')({
+    min: Math.min(...allMo), max: Math.max(...allMo), mean: r1(mean(allMo)),
+    hi: r1(hiMo.moMean), hiId: hiMo.id, hiUse: lower(v(hiMo.use)),
+    lo: r1(loMo.moMean), loId: loMo.id, loUse: lower(v(loMo.use)), nRange: nRange});
+}
 
 const PIN_SVG = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8L8 2M3.5 2H8v4.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>';
-document.querySelector('#char-table tbody').innerHTML = byPoint.map(p =>
-  '<tr data-point="'+p.id+'"><td><button class="pt-link" data-locate="'+p.id+'" aria-label="Show '+p.id+' on the sampling map">'+p.id+PIN_SVG+'</button></td><td>'+p.use+'</td><td>'+p.n+'</td><td>'+p.phMin.toFixed(1)+'–'+p.phMax.toFixed(1)+
-  '</td><td>'+p.colour+'</td><td>'+p.structure+'</td></tr>').join('');
+function renderCharTable(){
+  document.querySelector('#char-table tbody').innerHTML = byPoint.map(p =>
+    '<tr data-point="'+p.id+'"><td><button class="pt-link" data-locate="'+p.id+'" aria-label="'+t('locate')(p.id)+'">'+p.id+PIN_SVG+'</button></td><td>'+v(p.use)+'</td><td>'+p.n+'</td><td>'+p.phMin.toFixed(1)+'–'+p.phMax.toFixed(1)+
+    '</td><td>'+v(p.colour)+'</td><td>'+v(p.structure)+'</td></tr>').join('');
+}
 
 /* ================= Field ledger: filter, sort, highlight ================= */
 const LEDGER = {point:'all', key:null, dir:1};
 const ledgerBody = document.querySelector('#ledger tbody');
-const CHIP_DEFS = [{id:'all', label:'All'}].concat(POINTS.map(p=>({id:p.id, label:p.id, title:p.name})), [{id:'Ivan-gölü', label:'Water · W-01', title:'Ivan-gölü water sample'}]);
+const CHIP_DEFS = [{id:'all', label:'all'}].concat(POINTS.map(p=>({id:p.id, label:p.id, title:p.name})), [{id:'Ivan-gölü', label:'waterChip', title:'Ivan-gölü water sample'}]);
+const chipLabel = c => (c.label === 'all' || c.label === 'waterChip') ? t(c.label) : c.label;
 
 function renderLedger(flash){
   let rows = SAMPLES.filter(s => LEDGER.point === 'all' || s.point === LEDGER.point);
@@ -1391,12 +1472,12 @@ function renderLedger(flash){
   }
   ledgerBody.innerHTML = rows.map(s => {
     const c = v => (v === null || v === "") ? '<td style="color:#9AA694">—</td>' : '<td>'+v+'</td>';
-    return '<tr data-point="'+s.point+'"'+(flash ? ' class="flash"' : '')+'><td>'+s.id+'</td><td>'+s.point+'</td><td>'+s.type+'</td>' + c(s.ph === null ? null : s.ph.toFixed(1)) +
-      c(s.moisture === null ? null : s.moisture+'%') + c(s.colour) + c(s.structure) + '</tr>';
+    return '<tr data-point="'+s.point+'"'+(flash ? ' class="flash"' : '')+'><td>'+s.id+'</td><td>'+v(s.point)+'</td><td>'+v(s.type)+'</td>' + c(s.ph === null ? null : s.ph.toFixed(1)) +
+      c(s.moisture === null ? null : s.moisture+'%') + c(v(s.colour)) + c(v(s.structure)) + '</tr>';
   }).join('');
   const def = CHIP_DEFS.find(c => c.id === LEDGER.point);
-  document.getElementById('ledger-count').textContent = 'Showing ' + rows.length + ' of ' + SAMPLES.length + ' published records' +
-    (LEDGER.point === 'all' ? '' : ' · ' + (def && def.title ? def.title : LEDGER.point));
+  document.getElementById('ledger-count').textContent = t('showing')(rows.length, SAMPLES.length) +
+    (LEDGER.point === 'all' ? '' : ' · ' + v(def && def.title ? def.title : LEDGER.point));
 }
 function syncChips(pulse){
   document.querySelectorAll('#ledger-chips .chip').forEach(ch => {
@@ -1405,9 +1486,10 @@ function syncChips(pulse){
     if (on && pulse){ ch.classList.remove('pulse'); void ch.offsetWidth; ch.classList.add('pulse'); }
   });
 }
-document.getElementById('ledger-chips').innerHTML = CHIP_DEFS.map(c =>
-  '<button type="button" class="chip" data-point="'+c.id+'" aria-pressed="'+(c.id==='all')+'"'+(c.title?' title="'+c.title+'"':'')+'>'+c.label+'</button>').join('');
-renderLedger(false);
+function renderChips(){
+  document.getElementById('ledger-chips').innerHTML = CHIP_DEFS.map(c =>
+    '<button type="button" class="chip" data-point="'+c.id+'" aria-pressed="'+(c.id===LEDGER.point)+'"'+(c.title?' title="'+v(c.title)+'"':'')+'>'+chipLabel(c)+'</button>').join('');
+}
 
 /* ================= CSV download (same records and columns) ================= */
 function buildCSV(){
@@ -1418,11 +1500,13 @@ function buildCSV(){
   const esc = v => /[",]/.test(String(v)) ? '"'+String(v).replace(/"/g,'""')+'"' : v;
   return [head.join(','), ...rows.map(r => r.map(esc).join(','))].join('\n');
 }
-(function(){
-  const size = new Blob([buildCSV()]).size;
-  const meta = document.getElementById('file-meta');
-  meta.innerHTML = meta.innerHTML.replace('UTF-8', 'UTF-8 · ' + (size/1024).toFixed(1) + ' KB');
-})();
+const CSV_KB = (new Blob([buildCSV()]).size/1024).toFixed(1);
+const CSV_COLS = '<br><code>sample_id, sampling_point, land_use, sample_type, ph, moisture_percent, colour, structure</code>';
+function renderFileMeta(){
+  document.getElementById('file-meta').innerHTML = t('fileMeta')(STATS.publishedRows, STATS.publishedSoil, STATS.publishedWater, CSV_KB) + CSV_COLS;
+  const btn = document.getElementById('dl-csv');
+  if (!btn.classList.contains('ready')) btn.querySelector('.dl-label').textContent = csvLabel();
+}
 document.getElementById('dl-csv').addEventListener('click', function(){
   const btn = this, label = btn.querySelector('.dl-label');
   const url = URL.createObjectURL(new Blob([buildCSV()], {type:'text/csv;charset=utf-8'}));
@@ -1430,11 +1514,11 @@ document.getElementById('dl-csv').addEventListener('click', function(){
   a.href = url; a.download = 'ivanovka2050_field_dataset.csv';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1500);
-  document.getElementById('dl-status').textContent = 'Dataset ready: ivanovka2050_field_dataset.csv, ' + STATS.publishedRows + ' rows.';
+  document.getElementById('dl-status').textContent = t('readyStatus')(STATS.publishedRows);
   btn.classList.remove('ready'); void btn.offsetWidth; btn.classList.add('ready');
-  label.textContent = 'Dataset ready — ' + STATS.publishedRows + ' rows';
+  label.textContent = t('ready')(STATS.publishedRows);
   clearTimeout(btn._t);
-  btn._t = setTimeout(() => { label.textContent = CSV_LABEL; btn.classList.remove('ready'); }, 2800);
+  btn._t = setTimeout(() => { btn.classList.remove('ready'); label.textContent = csvLabel(); }, 2800);
 });
 
 /* ================= Sampling map + field-note panel ================= */
@@ -1443,35 +1527,35 @@ const sheet = document.getElementById('map-sheet');
 const panelBody = document.getElementById('panel-body');
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-document.getElementById('point-list').innerHTML = POINTS.map(p =>
-  '<button type="button" class="point-btn" data-point="'+p.id+'" aria-pressed="false"><b>'+p.id+'</b>'+p.name.split('— ')[1]+'</button>').join('');
-
-function panelDefault(){
-  return '<p style="margin:0 0 10px">Six sampling points, each spanning a different land-use type. Choose one on the map or from the list to read its field note.</p>' +
-    '<p style="margin:0" class="approx">Choosing a point also filters the field ledger to its records.<br>Positions are plotted from the field survey route.</p>';
+function renderPointList(){
+  document.getElementById('point-list').innerHTML = POINTS.map(p =>
+    '<button type="button" class="point-btn" data-point="'+p.id+'" aria-pressed="'+(p.id === MAP.active)+'"><b>'+p.id+'</b>'+v(p.name).split('— ')[1]+'</button>').join('');
 }
+
+function panelDefault(){ return t('panelDefault'); }
 function panelFor(id){
   const p = byPoint.find(x => x.id === id);
   const ids = soil.filter(s => s.point === id).map(s => s.id);
-  let html = '<span class="use">'+p.use+'</span><h3>'+p.name+'</h3>' +
+  let html = '<span class="use">'+v(p.use)+'</span><h3>'+v(p.name)+'</h3>' +
     '<dl>' +
-    '<dt>Published records</dt><dd>'+p.n+' <small>('+ids[0]+'–'+ids[ids.length-1]+')</small></dd>' +
-    '<dt>Mean pH</dt><dd>'+r1(p.phMean).toFixed(1)+' <small>range '+p.phMin.toFixed(1)+'–'+p.phMax.toFixed(1)+'</small></dd>' +
-    '<dt>Mean moisture</dt><dd>'+r1(p.moMean)+'% <small>range '+p.moMin+'–'+p.moMax+'%</small></dd>' +
-    '<dt>Colour</dt><dd>'+p.colour+'</dd>' +
-    '<dt>Structure</dt><dd>'+p.structure+'</dd>' +
-    '</dl><span class="badge measured">Measured</span>';
+    '<dt>'+t('pubRecords')+'</dt><dd>'+p.n+' <small>('+ids[0]+'–'+ids[ids.length-1]+')</small></dd>' +
+    '<dt>'+t('meanPh')+'</dt><dd>'+r1(p.phMean).toFixed(1)+' <small>'+t('range')+' '+p.phMin.toFixed(1)+'–'+p.phMax.toFixed(1)+'</small></dd>' +
+    '<dt>'+t('meanMo')+'</dt><dd>'+r1(p.moMean)+'% <small>'+t('range')+' '+p.moMin+'–'+p.moMax+'%</small></dd>' +
+    '<dt>'+t('colour')+'</dt><dd>'+v(p.colour)+'</dd>' +
+    '<dt>'+t('structure')+'</dt><dd>'+v(p.structure)+'</dd>' +
+    '</dl><span class="badge measured">'+t('measured')+'</span>';
   if (id === 'P5'){
     const w = SAMPLES.find(s => s.type === 'Water');
-    html += '<p class="approx" style="margin:12px 0 0">Also at Ivan-gölü: water sample '+w.id+' — pH '+w.ph.toFixed(1)+', '+w.colour.toLowerCase()+'.</p>';
+    html += '<p class="approx" style="margin:12px 0 0">'+t('alsoWater')(w.id, w.ph.toFixed(1), lower(v(w.colour)))+'</p>';
   }
-  html += '<p class="approx" style="margin:12px 0 0">Plotted at '+p.lat.toFixed(3)+'° N, '+p.lng.toFixed(3)+'° E from the survey route.</p>' +
-    '<div class="panel-actions"><button type="button" class="panel-btn primary" data-ledger="'+id+'">View '+id+' in ledger →</button>' +
-    '<button type="button" class="panel-btn" data-reset>All points</button></div>';
+  html += '<p class="approx" style="margin:12px 0 0">'+t('plotted')(p.lat.toFixed(3), p.lng.toFixed(3))+'</p>' +
+    '<div class="panel-actions"><button type="button" class="panel-btn primary" data-ledger="'+id+'">'+t('viewLedger')(id)+'</button>' +
+    '<button type="button" class="panel-btn" data-reset>'+t('allPoints')+'</button></div>';
   return html;
 }
-function renderPanel(id){
+function renderPanel(id, quiet){
   panelBody.innerHTML = id ? panelFor(id) : panelDefault();
+  if (quiet) return;
   panelBody.classList.remove('swap'); void panelBody.offsetWidth; panelBody.classList.add('swap');
 }
 
@@ -1495,12 +1579,55 @@ function selectPoint(id, from){
   }
 }
 
+/* ================= Static text: English captured from the page, Azerbaijani from the dictionary ================= */
+const I18N_AZ = JSON.parse(document.getElementById('i18n-az').textContent || '{}');
+const I18N_SKIP = 'script, style, .lang-switch, .leaflet-pane, .leaflet-control-container, .hero-grass, .topo, .net-lines, #chart-ph, #chart-moist, #find-ph, #find-moist, #char-table tbody, #ledger tbody, #ledger-chips, #ledger-count, #point-list, #panel-body, #sys-note, #file-meta, #dl-status, .dl-label, .bee';
+const norm = h => h.replace(/\s+/g, ' ').trim();
+const STATIC_TEXT = [], STATIC_ATTR = [];
+(function collect(el){
+  for (const c of el.children){
+    if (c.matches(I18N_SKIP)) continue;
+    for (const a of ['alt', 'aria-label', 'title']) if (c.hasAttribute(a) && /[A-Za-z]/.test(c.getAttribute(a))) STATIC_ATTR.push({el:c, attr:a, en:c.getAttribute(a)});
+    const direct = Array.from(c.childNodes).some(n => n.nodeType === 3 && /[A-Za-z]/.test(n.nodeValue));
+    if (direct) STATIC_TEXT.push({el:c, en:c.innerHTML, key:norm(c.innerHTML)});
+    else collect(c);
+  }
+})(document.body);
+window.__i18nKeys = () => STATIC_TEXT.map(x => x.key).concat(STATIC_ATTR.map(x => '@' + x.en));
+
+function renderDynamic(){
+  renderCharts(); renderFindings(); renderCharTable(); renderChips(); syncChips(false); renderLedger(false);
+  renderPointList(); renderPanel(MAP.active, true); renderFileMeta();
+}
+function setLang(lang, save){
+  LANG = lang === 'az' ? 'az' : 'en';
+  document.documentElement.lang = LANG;
+  STATIC_TEXT.forEach(x => { const az = I18N_AZ[x.key]; x.el.innerHTML = (LANG === 'az' && az) ? az : x.en; });
+  STATIC_ATTR.forEach(x => { const az = I18N_AZ['@' + x.en]; x.el.setAttribute(x.attr, (LANG === 'az' && az) ? az : x.en); });
+  document.title = t('title');
+  const md = document.querySelector('meta[name="description"]'); if (md) md.setAttribute('content', t('description'));
+  document.querySelectorAll('.lang-switch button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === LANG ? 'true' : 'false'));
+  renderDynamic();
+  Object.keys(MAP.markers).forEach(id => { const el = MAP.markers[id].getElement(); if (el) el.title = t('markerTitle')(v(POINTS.find(p => p.id === id).name)); });
+  const off = document.querySelector('#map[data-offline]'); if (off) off.textContent = t('mapOffline');
+  if (window.__ivRelang) window.__ivRelang();
+  if (save) { try { localStorage.setItem('iv-lang', LANG); } catch (e) {} }
+}
+document.querySelector('.lang-switch').addEventListener('click', e => {
+  const b = e.target.closest('button[data-lang]'); if (b && b.dataset.lang !== LANG) setLang(b.dataset.lang, true);
+});
+renderDynamic();
+(function initialLang(){
+  let l = null;
+  try { l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('iv-lang'); } catch (e) {}
+  if (l === 'az') setLang('az', false);
+})();
+
 (function initMap(){
   const el = document.getElementById('map');
-  renderPanel(null);
   if (!window.L){
     el.classList.add('map-offline');
-    el.textContent = 'The base map could not load. The six points and their field notes remain available in the panel.';
+    el.textContent = t('mapOffline'); el.setAttribute('data-offline', '');
     sheet.classList.add('shown');
     return;
   }
@@ -1526,10 +1653,11 @@ function selectPoint(id, from){
   })(0);
   map.fitBounds(L.latLngBounds(byPoint.map(p => [p.lat, p.lng])), {padding:[70,70], maxZoom:14});
   L.control.scale({imperial:false, maxWidth:110, position:'bottomright'}).addTo(map);
+  if ('ResizeObserver' in window) new ResizeObserver(() => map.invalidateSize({pan:false})).observe(el);
   byPoint.forEach((p, i) => {
     const icon = L.divIcon({className:'pt-icon', iconSize:[0,0],
       html:'<span class="pt" style="--i:'+i+'"><span class="pt-halo"></span><span class="pt-pulse"></span><span class="pt-dot"></span><span class="pt-id">'+p.id+'</span></span>'});
-    const m = L.marker([p.lat, p.lng], {icon:icon, keyboard:true, title:p.name+' — survey-route position', riseOnHover:true}).addTo(map);
+    const m = L.marker([p.lat, p.lng], {icon:icon, keyboard:true, title:t('markerTitle')(v(p.name)), riseOnHover:true}).addTo(map);
     m.on('click', () => selectPoint(p.id, 'map'));
     MAP.markers[p.id] = m;
   });
@@ -1808,20 +1936,30 @@ document.addEventListener('click', e => {
 
   /* --- system diagram: one component at a time --- */
   const system = document.getElementById('system'), note = document.getElementById('sys-note');
-  const NOTES = {
+  const NOTES_EN = {
     farmland:   ['Farmland', 'Cultivated plots, field margins and drip-irrigated sunflower rows were all part of the soil and vegetation survey.'],
     water:      ['Water resources', 'Ivan-gölü, the farm reservoir, feeds the irrigated fields. It is where the project’s water sample was drawn.'],
     production: ['Production', 'The harvest remains in shared ownership. The food-waste framework (Phase II) traces where losses of dairy and produce can occur between the farm and the market.'],
     livestock:  ['Livestock', 'The herds remain in shared ownership. Herd numbers are part of the carbon desk study, and the smart-dairy design (Phase II) addresses herd monitoring.'],
-    machinery:  ['Machinery', 'Machinery is held in shared ownership. It is one of the activity categories compiled in the carbon desk study.']
+    machinery:  ['Machinery', 'Machinery is held in shared ownership. It is one of the activity categories compiled in the carbon desk study.'],
+    default:    ['One system', 'Five components held in shared ownership. Select one to see where it appears in the study. The diagram illustrates the text; it shows connection, not measured flows.']
   };
-  const defaultNote = note.innerHTML;
+  const NOTES_AZ = {
+    farmland:   ['Əkin sahələri', 'Becərilən sahələr, sahə kənarları və damcı ilə suvarılan günəbaxan cərgələri torpaq və bitki örtüyü tədqiqatına daxil edilib.'],
+    water:      ['Su ehtiyatları', 'Təsərrüfatın su anbarı olan İvan-gölü suvarılan sahələri qidalandırır. Layihənin su nümunəsi də buradan götürülüb.'],
+    production: ['İstehsal', 'Məhsul ortaq mülkiyyətdə qalır. Qida itkiləri üzrə analitik çərçivə (II mərhələ) süd və kənd təsərrüfatı məhsullarının təsərrüfatdan bazara qədər harada itə biləcəyini izləyir.'],
+    livestock:  ['Heyvandarlıq', 'Sürülər ortaq mülkiyyətdə qalır. Heyvanların sayı karbon üzrə kameral tədqiqata daxildir, «ağıllı süd təsərrüfatı» layihəsi (II mərhələ) isə sürünün monitorinqinə yönəlib.'],
+    machinery:  ['Texnika', 'Texnika ortaq mülkiyyətdədir. O, karbon üzrə kameral tədqiqatda toplanmış fəaliyyət kateqoriyalarından biridir.'],
+    default:    ['Vahid sistem', 'Ortaq mülkiyyətdə olan beş komponent. Tədqiqatda harada əks olunduğunu görmək üçün birini seçin. Diaqram mətni təsvir edir; o, ölçülmüş axınları deyil, əlaqəni göstərir.']
+  };
+  const NOTES = () => LANG === 'az' ? NOTES_AZ : NOTES_EN;
   let pinned = null;
   function focusSys(k){
     system.classList.toggle('has-focus', !!k);
     system.querySelectorAll('.sys-node, .sys-link').forEach(n => n.classList.toggle('on', n.dataset.k === k));
     system.querySelectorAll('.sys-node').forEach(n => n.setAttribute('aria-pressed', n.dataset.k === k ? 'true' : 'false'));
-    note.innerHTML = k ? '<b>' + NOTES[k][0] + '</b>' + NOTES[k][1] : defaultNote;
+    const nt = NOTES()[k || 'default'];
+    note.innerHTML = '<b>' + nt[0] + '</b>' + nt[1];
   }
   system.querySelectorAll('.sys-node').forEach(n => {
     const k = n.dataset.k;
@@ -1917,6 +2055,8 @@ document.addEventListener('click', e => {
   }
 
   frame();
+  focusSys(pinned);
+  window.__ivRelang = () => { focusSys(pinned); drawNet(); };
   window.__iv = true;
 })();
 </script>
